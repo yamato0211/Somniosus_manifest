@@ -7,7 +7,21 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     # alb.ingress.kubernetes.io/manage-backend-security-group-rules: "true"
-    alb.ingress.kubernetes.io/security-groups: sg-076405d4c708391e9, sg-0543801e3606248e9
+    # alb.ingress.kubernetes.io/security-groups: sg-076405d4c708391e9, sg-0543801e3606248e9
+    alb.ingress.kubernetes.io/actions.sample-eks-service-target: >
+      {
+        "type":"forward",
+        "forwardConfig" : {
+          "targetGroups" : [
+            {
+              "serviceName" : "sample-eks-service-target",
+              "servicePort" : "8080"
+            }
+          ]
+        }
+      }
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-1:616532015738:certificate/87e0cfe9-844f-447c-9c14-bb29b2697419
 spec:
   ingressClassName: alb
   rules:
